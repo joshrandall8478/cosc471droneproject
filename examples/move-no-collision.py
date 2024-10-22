@@ -15,7 +15,7 @@ def print_y():
         asyncio.sleep(1)
         print(drone.get_pos_y())
 
-# Check y, land drone if close to ground
+# Check y, land drone if close to ground. All distances are in CM.
 def check_y():
     while True:
         asyncio.sleep(1)

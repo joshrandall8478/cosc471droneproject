@@ -4,8 +4,12 @@ drone = Drone()
 drone.pair() # To pair automatically, may not always work
 
 drone.takeoff()
-drone.hover(1)
+# drone.hover(5)
+# drone.avoid_wall(10,50)
+# drone.flip("back")
 
-drone.land()
+drone.keep_distance(60)
+
+# drone.land()
 
 drone.close()

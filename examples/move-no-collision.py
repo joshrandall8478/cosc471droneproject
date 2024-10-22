@@ -19,7 +19,7 @@ def print_y():
 def check_y():
     while True:
         asyncio.sleep(1)
-        if drone.get_pos_y() <= 40:
+        if drone.get_pos_y() < 40:
             drone.land()
 
 

@@ -1,1 +1,2 @@
 codrone-edu
+mysql-connector-python

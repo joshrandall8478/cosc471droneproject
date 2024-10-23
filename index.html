@@ -1,35 +1,26 @@
+<!-- index.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Drone Racing Leaderboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Racing Data</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Drone Racing Leaderboard</h1>
-  <table id="leaderboard">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <h1>Drone Racing Competition - Pilot Leaderboard</h1>
 
-  <script>
-    // Fetch player data from the back-end and display it in the table
-    fetch('http://localhost:3000/players')
-      .then(response => response.json())
-      .then(players => {
-        const tableBody = document.querySelector('#leaderboard tbody');
-        players.forEach(player => {
-          const row = document.createElement('tr');
-          row.innerHTML = `<td>${player.name}</td><td>${player.email}</td>`;
-          tableBody.appendChild(row);
-        });
-      })
-      .catch(err => console.error('Error fetching player data:', err));
-  </script>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Pilot Name</th>
+                <th>Email</th>
+                <th>Flight Time (seconds)</th>
+            </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+    </table>
 </body>
 </html>

@@ -1,6 +1,8 @@
 import mysql.connector
 
 
+
+
 mydb = mysql.connector.connect(
   host="localhost",
   user="droneuser",
@@ -25,14 +27,17 @@ if cursor.rowcount == 0:
 cursor.execute("use drone")
 
 
+cursor.execute("show tables like 'runs'")
 
-# """
-# commands to see if the necessary tables exist
-# """
+# If database drone doesnt exist, then it will return an empty set. 
+if cursor.rowcount == 0:
+    cursor.execute("create table Runs ( ID int, MaxHeightCM float, MaxTemperature float, MaxSpeed float, Duration float);")
 
-# cursor.execute("show tables like 'drone'")
 
-# # If database drone doesnt exist, then it will return an empty set. 
-# if len(cursor) is 0:
-#     cursor.execute("CREATE DATABASE drone")
-
+class Entry:
+  def __init__(self, maxHeight, temperature, speed):
+    self.maxHeight = maxHeight
+    self.temp = temperature
+    self.speed = speed
+  
+  # def insert()

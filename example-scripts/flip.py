@@ -10,6 +10,6 @@ drone.flip("back")
 
 # drone.keep_distance(60)
 
-# drone.land()
+drone.land()
 
 drone.close()

@@ -69,4 +69,4 @@ print("Duration: " + str(stopwatch))
 
 # drone.land()
 
-# drone.close()
+drone.close()

@@ -1,19 +1,23 @@
 import mysql.connector
+from mysql.connector import Error
 
+# Function to create a connection to the MySQL database
+def create_connection():
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="pass123",
+            database="drone"
+        )
+        if connection.is_connected():
+            print("Connected to the database successfully.")
+        return connection
+    except Error as e:
+        print(f"Error connecting to the database: {e}")
+        return None
 
-
-
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="pass123",
-  database="drone"
-)
-
-print(mydb) # test to see if connection was successful
-
-cursor = mydb.cursor(buffered=True)
-cursor.execute()
+# Function to set up the database and create the required table if not exists
 def setup_database(connection):
     cursor = connection.cursor(buffered=True)
     cursor.execute("SHOW DATABASES LIKE 'drone'")
@@ -27,30 +31,31 @@ def setup_database(connection):
         cursor.execute("""
             CREATE TABLE dronestats (
                 ID INT AUTO_INCREMENT PRIMARY KEY,
-                maxHeight INT,
-                maxTemperature FLOAT,
-                maxSpeed FLOAT,
+                max_height INT,
+                max_temperature FLOAT,
+                max_speed FLOAT,
                 duration FLOAT
             )
         """)
     cursor.close()
 
+# Class representing a database entry for a drone flight record
 class Entry:
-  def __init__(self, maxHeight, temperature, speed,duration):
-    self.maxHeight = maxHeight
-    self.temp = temperature
-    self.speed = speed
-    self.duration = stopwatch
+    def __init__(self, max_height, max_temperature, max_speed, duration):
+        self.max_height = max_height
+        self.max_temperature = max_temperature
+        self.max_speed = max_speed
+        self.duration = duration
 
-  
-  def insert(self, connection):
-    try:
-      cursor = connection.cursor()
+    # Method to insert a new record into the database
+    def insert(self, connection):
+        try:
+            cursor = connection.cursor()
             query = """
-                INSERT INTO dronestats (max_height, temperature, speed, duration)
+                INSERT INTO dronestats (maxHeight, maxTemperature, maxSpeed, duration)
                 VALUES (%s, %s, %s, %s)
             """
-            values = (self.max_height, self.temperature, self.speed, self.duration)
+            values = (self.max_height, self.max_temperature, self.max_speed, self.duration)
             cursor.execute(query, values)
             connection.commit()
             print("Drone data inserted successfully.")

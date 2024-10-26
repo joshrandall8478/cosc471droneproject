@@ -36,25 +36,25 @@ def setup_database(connection):
     cursor.close()
 
 class Entry:
-  def __init__(self, maxHeight, temperature, speed,duration):
+  def __init__(self, maxHeight, temperature, speed, duration):
     self.maxHeight = maxHeight
     self.temp = temperature
     self.speed = speed
-    self.duration = stopwatch
+    self.duration = duration
 
   
   def insert(self, connection):
     try:
       cursor = connection.cursor()
-            query = """
-                INSERT INTO dronestats (max_height, temperature, speed, duration)
-                VALUES (%s, %s, %s, %s)
-            """
-            values = (self.max_height, self.temperature, self.speed, self.duration)
-            cursor.execute(query, values)
-            connection.commit()
-            print("Drone data inserted successfully.")
-        except Error as e:
-            print(f"Failed to insert data: {e}")
-        finally:
-            cursor.close()
+      query = """
+          INSERT INTO dronestats (max_height, temperature, speed, duration)
+          VALUES (%s, %s, %s, %s)
+      """
+      values = (self.max_height, self.temperature, self.speed, self.duration)
+      cursor.execute(query, values)
+      connection.commit()
+      print("Drone data inserted successfully.")
+    except Error as e:
+        print(f"Failed to insert data: {e}")
+    finally:
+        cursor.close()

@@ -74,6 +74,7 @@ drone.close()
 conn = create_connection()
 if conn:
     setup_database(conn)
+    # ! Define drone temperature
     entry = Entry(max_height=max_height, temperature=temperature, speed=speed, duration=stopwatch)
     entry.insert(conn)
     conn.close()

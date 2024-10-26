@@ -5,6 +5,13 @@ import asyncio
 
 import database
 
+try:
+    from codrone_edu.drone import Drone
+    drone = Drone()
+except ImportError:
+    from mock_drone import MockDrone
+    drone = MockDrone()
+
 
 global stopwatch 
 
@@ -60,6 +67,20 @@ stopwatch.stop()
 print("Max Height: " + str(max_height) + "cm")
 print("Duration: " + str(stopwatch))
 
+# Establish a database connection
+connection = create_connection()
+if connection:
+    # Set up the database and table if they don’t exist
+    setup_database(connection)
+    
+    # Insert data from drone
+    # i leave the mock data there for max_temp and max_speed
+    entry = Entry(max_height=max_height, max_temperature=32.5, max_speed=3.6, duration=stopwatch)
+    entry.insert(connection)
+    
+    # Close the connection
+    connection.close()
+
 
 # while True:
 #     print(drone.get_flight_state())
@@ -70,10 +91,5 @@ print("Duration: " + str(stopwatch))
 
 # drone.land()
 
+
 drone.close()
-conn = create_connection()
-if conn:
-    setup_database(conn)
-    entry = Entry(max_height=max_height, temperature=temperature, speed=speed, duration=stopwatch)
-    entry.insert(conn)
-    conn.close()

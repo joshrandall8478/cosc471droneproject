@@ -1,5 +1,6 @@
 from codrone_edu.drone import *
 from stopwatch import Stopwatch
+from database import Entry, create_connection, setup_database
 import asyncio
 
 import database
@@ -70,3 +71,10 @@ print("Duration: " + str(stopwatch))
 # drone.land()
 
 # drone.close()
+# Insert collected data into the database
+conn = create_connection()
+if conn:
+    setup_database(conn)
+    entry = Entry(max_height=max_height, temperature=temperature, speed=speed, duration=stopwatch)
+    entry.insert(conn)
+    conn.close()

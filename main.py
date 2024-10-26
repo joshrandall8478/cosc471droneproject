@@ -49,6 +49,16 @@ def get_values():
             max_height = drone.get_pos_z(unit="cm")
 
 
+# global totalHeight
+# global heightPoints
+# totalHeight = 0
+# heightPoints = 0
+# def computeHeight():
+#     global totalHeight
+#     global heightPoints
+#     totalHeight = totalHeight + drone.get_pos_z(unit="cm")
+#     heightPoints = heightPoints + 1
+
 stopwatch.start()
 
 while airborne():

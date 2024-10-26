@@ -27,7 +27,7 @@ if cursor.rowcount == 0:
 cursor.execute("use drone")
 
 
-cursor.execute("show tables like 'runs'")
+cursor.execute("show tables like 'Runs'")
 
 # If database drone doesnt exist, then it will return an empty set. 
 if cursor.rowcount == 0:

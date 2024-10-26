@@ -9,11 +9,11 @@
 </head>
 
 <body>
-    <h1>Drone Racing Competition - Pilot Registration</h1>
+    <!-- <h1>Drone Racing Competition - Pilot Registration</h1> -->
 
 
     <!-- User Registration Form -->
-    <form action="register.php" method="POST">
+    <!-- <form action="register.php" method="POST">
         <label for="name">Pilot Name:</label>
         <input type="text" id="name" name="name" required>
 
@@ -23,10 +23,10 @@
 
 
         <input type="submit" value="Register">
-    </form>
+    </form> -->
 
 
-    <h2>Leaderboard</h2>
+    <h1>Drone Stats</h1>
 
 
 

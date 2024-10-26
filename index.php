@@ -32,14 +32,14 @@
 
 
     <table id="data-table">
-        <thead>
+        <!-- <thead>
             <tr>
                 <th>Pilot Name</th>
                 <th>Email</th>
                 <th>Flight Time (seconds)</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody> -->
             <?php
             // Include the database connection
             // include 'connect.php';
@@ -51,26 +51,35 @@
             $result = mysqli_query($db,$query);
             $rows = mysqli_num_rows($result);   // Number of rows in $result
 
-
+            
             // Check if the query returned any results
-            if ($result && $result->num_rows > 0) {
+            if ($rows > 0) {
+                // (ID int, MaxHeightCM float, MaxTemperature float, MaxSpeed float, Duration float, primary key(id));
+                echo "<tr><td>ID</td><td>Max Height</td><td>Max Temperature</td><td>Max Speed</td><td>Duration</td></tr>";
                 // Loop through each row and output the data into the table
-                while ($row = $result->fetch_assoc()) {
+                for($i = 0; $i < $rows; $i++){
+                    $run = mysqli_fetch_assoc($result);
+
+                    $id = $run["ID"];
+                    $maxHeight = $run["MaxHeightCM"];
+                    $maxTemp = $run["MaxTemperature"];
+                    $maxSpeed = $run["MaxSpeed"];
+                    $duration = $run["Duration"];
+
                     echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['flight_time']) . "</td>";
+                    echo "<td>$id</td>";
+                    echo "<td>$maxHeight</td>";
+                    echo "<td>$maxTemp</td>";
+                    echo "<td>$maxSpeed</td>";
+                    echo "<td>$duration</td>";
                     echo "</tr>";
                 }
             } else {
                 echo "<tr><td colspan='3'>No data available</td></tr>";
             }
 
-
-            // Close connection
-            $conn->close();
             ?>
-        </tbody>
+        <!-- </tbody> -->
     </table>
 </body>
 

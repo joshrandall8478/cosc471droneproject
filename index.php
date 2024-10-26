@@ -46,7 +46,7 @@
 
 
             // Fetch data from 'pilots' table
-            $db = mysqli_connect("localhost:3306", "droneuser", "dronepassword", "DroneCompetition");  // Connects to database in mysql
+            $db = mysqli_connect("localhost:3306", "droneuser", "dronepassword", "dronestats");  // Connects to database in mysql
             $query = "SELECT * FROM Runs";
             $result = mysqli_query($db,$query);
             $rows = mysqli_num_rows($result);   // Number of rows in $result

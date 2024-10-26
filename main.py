@@ -9,7 +9,7 @@ try:
     from codrone_edu.drone import Drone
     drone = Drone()
 except ImportError:
-    from mock_drone import MockDrone
+    from MockDrone import MockDrone
     drone = MockDrone()
 
 

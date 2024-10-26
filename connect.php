@@ -1,10 +1,10 @@
 <!-- connect.php -->
 <?php
 // Database connection credentials
-$db_server = "127.0.0.1";
-$db_user = "root";
-$db_pass = "";
-$db_name = "businessdb";
+$db_server = "localhost:3306";
+$db_user = "droneuser";
+$db_pass = "dronepassword";
+$db_name = "DroneCompetition";
 // $conn = "";
 
 

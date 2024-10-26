@@ -5,15 +5,15 @@ import mysql.connector
 
 mydb = mysql.connector.connect(
   host="localhost",
-  user="root",
-  password="pass123",
+  user="droneuser",
+  password="dronepassword",
   database="drone"
 )
 
 print(mydb) # test to see if connection was successful
 
 cursor = mydb.cursor(buffered=True)
-cursor.execute()
+# cursor.execute()
 def setup_database(connection):
     cursor = connection.cursor(buffered=True)
     cursor.execute("SHOW DATABASES LIKE 'drone'")

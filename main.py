@@ -5,13 +5,11 @@ import asyncio
 
 import database
 
+# Try to import real Drone, otherwise use MockDrone
 try:
     from codrone_edu.drone import Drone
-    drone = Drone()
 except ImportError:
-    from MockDrone import MockDrone
-    drone = MockDrone()
-
+    from MockDrone import MockDrone as Drone
 
 global stopwatch 
 

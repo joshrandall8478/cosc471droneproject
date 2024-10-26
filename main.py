@@ -70,8 +70,7 @@ print("Duration: " + str(stopwatch))
 
 # drone.land()
 
-# drone.close()
-# Insert collected data into the database
+drone.close()
 conn = create_connection()
 if conn:
     setup_database(conn)

@@ -14,7 +14,7 @@ class Database:
                   host = host,
                   user = user,
                   password = password,
-                  datbase= database
+                  database= database
                   # host="localhost",
                   # user="droneuser",
                   # password="dronepassword",
@@ -41,22 +41,22 @@ class Database:
                 cursor.execute("""
                     CREATE TABLE dronestats (
                         ID INT AUTO_INCREMENT PRIMARY KEY,
-                        max_height INT,
-                        max_temperature FLOAT,
-                        max_speed FLOAT,
+                        maxHeight INT,
+                        maxTemperature FLOAT,
+                        maxAccel FLOAT,
                         duration FLOAT
                     )
                 """)
         setup_database(self.connection)
           # Method to insert a new record into the database
-    def insert(self, max_height, max_temperature, max_speed, duration):
+    def insert(self, max_height, max_temperature, max_accel, duration):
         try:
             cursor = self.connection.cursor(buffered=True)
             query = """
-                INSERT INTO dronestats (id, maxHeight, maxTemperature, maxSpeed, duration)
+                INSERT INTO dronestats (maxHeight, maxTemperature, maxAccel, duration)
                 VALUES (%s, %s, %s, %s)
             """
-            values = (max_height, max_temperature, max_speed, duration)
+            values = (max_height, max_temperature, max_accel, duration)
             cursor.execute("USE drone")
             cursor.execute(query, values)
             self.connection.commit()

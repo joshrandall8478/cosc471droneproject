@@ -54,23 +54,23 @@
             
             // Check if the query returned any results
             if ($rows > 0) {
-                // (ID int, MaxHeightCM float, MaxTemperature float, MaxSpeed float, Duration float, primary key(id));
-                echo "<tr><td>ID</td><td>Max Height</td><td>Max Temperature</td><td>Max Speed</td><td>Duration</td></tr>";
+                // (ID int, MaxHeightCM float, MaxTemperature float, maxAccel float, Duration float, primary key(id));
+                echo "<tr><td>ID</td><td>Max Height</td><td>Max Temperature</td><td>Max Accel</td><td>Duration</td></tr>";
                 // Loop through each row and output the data into the table
                 for($i = 0; $i < $rows; $i++){
                     $run = mysqli_fetch_assoc($result);
 
                     $id = $run["ID"];
-                    $maxHeight = $run["MaxHeightCM"];
-                    $maxTemp = $run["MaxTemperature"];
-                    $maxSpeed = $run["MaxSpeed"];
-                    $duration = $run["Duration"];
+                    $maxHeight = $run["maxHeight"];
+                    $maxTemp = $run["maxTemperature"];
+                    $maxAccel = $run["maxAccel"];
+                    $duration = $run["duration"];
 
                     echo "<tr>";
                     echo "<td>$id</td>";
                     echo "<td>$maxHeight</td>";
                     echo "<td>$maxTemp</td>";
-                    echo "<td>$maxSpeed</td>";
+                    echo "<td>$maxAccel</td>";
                     echo "<td>$duration</td>";
                     echo "</tr>";
                 }

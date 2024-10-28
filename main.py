@@ -46,8 +46,8 @@ max_accel = 0
 def get_height():
     global max_height
     # print(drone.get_height(unit="cm"))
-    if drone.get_height() > max_height:
-        max_height = drone.get_height(unit="cm")
+    if drone.get_pos_z() > max_height:
+        max_height = drone.get_pos_z(unit="cm")
 
 def get_temperature():
     global max_temperature

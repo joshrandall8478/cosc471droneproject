@@ -67,8 +67,3 @@ class Database:
             cursor.close()
     def close(self):
       self.connection.close()
-
-                # Function to create a connection to the MySQL database
-    
-
-    

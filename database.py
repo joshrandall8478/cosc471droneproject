@@ -1,43 +1,69 @@
 import mysql.connector
+from mysql.connector import Error
 
-
-
-
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="droneuser",
-  password="dronepassword"
-)
-
-print(mydb) # test to see if connection was successful
-
-cursor = mydb.cursor(buffered=True)
-
-
-"""
-commands to see if database exists
-"""
-
-cursor.execute("show databases like 'drone'")
-
-# If database drone doesnt exist, then it will return an empty set. 
-if cursor.rowcount == 0:
-    cursor.execute("CREATE DATABASE drone")
-
-cursor.execute("use drone")
-
-
-cursor.execute("show tables like 'Runs'")
-
-# If database drone doesnt exist, then it will return an empty set. 
-if cursor.rowcount == 0:
-    cursor.execute("create table Runs ( ID int, MaxHeightCM float, MaxTemperature float, MaxSpeed float, Duration float);")
-
-
-class Entry:
-  def __init__(self, maxHeight, temperature, speed):
-    self.maxHeight = maxHeight
-    self.temp = temperature
-    self.speed = speed
-  
-  # def insert()
+# Class representing a database entry for a drone flight record
+class Database:
+    def __init__(self, host, user,password, database):
+        self.host = host
+        self.user = user
+        self.password = password
+        self.database = database
+        def create_connection(host, user,password, database):
+          try:
+              connection = mysql.connector.connect(
+                  host = host,
+                  user = user,
+                  password = password,
+                  database= database
+                  # host="localhost",
+                  # user="droneuser",
+                  # password="dronepassword",
+                  # database="drone"
+              )
+              if connection.is_connected():
+                  print("Connected to the database successfully.")
+              return connection
+          except Error as e:
+              print(f"Error connecting to the database: {e}")
+              return None
+        self.connection = create_connection(self.host, self.user, self.password, self.database)
+        # Function to set up the database and create the required table if not exists
+        def setup_database(connection):
+            cursor = connection.cursor(buffered=True)
+            cursor.execute("SHOW DATABASES LIKE 'drone'")
+            if cursor.rowcount == 0:
+                cursor.execute("CREATE DATABASE drone")
+            cursor.execute("USE drone")
+            
+            # Create the dronestats table if it does not exist
+            cursor.execute("SHOW TABLES LIKE 'dronestats'")
+            if cursor.rowcount == 0:
+                cursor.execute("""
+                    CREATE TABLE dronestats (
+                        ID INT AUTO_INCREMENT PRIMARY KEY,
+                        maxHeight INT,
+                        maxTemperature FLOAT,
+                        maxAccel FLOAT,
+                        duration FLOAT
+                    )
+                """)
+        setup_database(self.connection)
+          # Method to insert a new record into the database
+    def insert(self, max_height, max_temperature, max_accel, duration):
+        try:
+            cursor = self.connection.cursor(buffered=True)
+            query = """
+                INSERT INTO dronestats (maxHeight, maxTemperature, maxAccel, duration)
+                VALUES (%s, %s, %s, %s)
+            """
+            values = (max_height, max_temperature, max_accel, duration)
+            cursor.execute("USE drone")
+            cursor.execute(query, values)
+            self.connection.commit()
+            print("Drone data inserted successfully.")
+        except Error as e:
+            print(f"Failed to insert data: {e}")
+        finally:
+            cursor.close()
+    def close(self):
+      self.connection.close()

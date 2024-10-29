@@ -1,5 +1,6 @@
 # cosc471droneproject
 
+**Developers: Joshua Randall, Johnny Zheng, Riyat Leiyate, and Jackson Le**
 ## Getting Started
 ### Clone the repository and CD into the directory
 ```bash

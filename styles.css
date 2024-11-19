@@ -1,3 +1,17 @@
+*{
+    font-family: "Roboto", sans-serif;
+}
+body{
+    background-color: black;
+    color: white;
+    
+}
+
+.title-text{
+    text-align:center;
+}
+
+
 table {
     width: 100%;
     border-collapse: collapse;

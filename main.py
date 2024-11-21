@@ -27,6 +27,8 @@ drone.pair() # To pair automatically, may not always work
 #         sleep(1)
 
 
+
+
 drone.takeoff()
 
 # asyncio.run(print_flight_state())

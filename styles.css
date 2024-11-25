@@ -35,6 +35,9 @@ body{
     color: white;
     text-decoration: none;
 }
+.button:visited:hover{
+    color: lightgreen;
+}
 .buttons-group{
     align-items: center;
     margin: auto;

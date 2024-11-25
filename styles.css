@@ -11,7 +11,37 @@ body{
     text-align:center;
 }
 
+.flex{
+    display: "flex";
+}
+.button:hover{
+    padding: 20px;
+    border: 1px solid lightgreen;
+    color: lightgreen;
+    border-radius: 25px;
+    font-size: 20px;
+    text-decoration: none;
+    transition: all ease-out 0.3s;
+}
+.button{
+    padding: 15px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all ease-out 0.3s;
+}
+.button:visited{
+    color: white;
+    text-decoration: none;
+}
+.buttons-group{
+    align-items: center;
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
 
+}
 table {
     width: 100%;
     border-collapse: collapse;

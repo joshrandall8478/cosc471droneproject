@@ -33,8 +33,61 @@
     <main>
     <div class="container">
         <h1 class="title-text">EMU Drone Racing Competition</h1>
-        <button>Fly and add new record</button>
-        <button>See full leaderboard</button>
+        <table id="data-table">
+        <!-- <thead>
+            <tr>
+                <th>Pilot Name</th>
+                <th>Email</th>
+                <th>Flight Time (seconds)</th>
+            </tr>
+        </thead>
+        <tbody> -->
+            <?php
+            // Include the database connection
+            // include 'connect.php';
+
+
+            // Fetch data from 'pilots' table
+            $db = mysqli_connect("localhost:3306", "droneuser", "dronepassword", "drone");  // Connects to database in mysql
+            $query = "SELECT * FROM dronestats";
+            $result = mysqli_query($db,$query);
+            $rows = mysqli_num_rows($result);   // Number of rows in $result
+
+            
+            // Check if the query returned any results
+            if ($rows > 0) {
+                // (ID int, MaxHeightCM float, MaxTemperature float, maxAccel float, Duration float, primary key(id));
+                echo "<tr><td>ID</td><td>Max Height</td><td>Max Temperature</td><td>Max Accel</td><td>Duration</td></tr>";
+                // Loop through each row and output the data into the table
+                for($i = 0; $i < $rows; $i++){
+                    $run = mysqli_fetch_assoc($result);
+
+                    $id = $run["ID"];
+                    $maxHeight = $run["maxHeight"];
+                    $maxTemp = $run["maxTemperature"];
+                    $maxAccel = $run["maxAccel"];
+                    $duration = $run["duration"];
+
+                    echo "<tr>";
+                    echo "<td>$id</td>";
+                    echo "<td>$maxHeight</td>";
+                    echo "<td>$maxTemp</td>";
+                    echo "<td>$maxAccel</td>";
+                    echo "<td>$duration</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='3'>No data available</td></tr>";
+            }
+
+            ?>
+        <!-- </tbody> -->
+    </table>
+    <div class="flex buttons-group">
+    <a class="button" href="./register.php">Fly and add new record</a>
+    <a class="button">See full leaderboard</a>
+    </div>
+        
     </div>
     </main>
 </body>

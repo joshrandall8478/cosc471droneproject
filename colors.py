@@ -1,9 +1,11 @@
 from codrone_edu.drone import *
+from time import sleep
 
+global drone
 drone = Drone()
 drone.pair()
 
-colorSeq = ["Green", "Yellow", "Red"]
+colorSeq = ["Green", "Blue", "Red"]
 
 global colorActive
 
@@ -14,26 +16,30 @@ def airborne():
         return False
     
 
+print(drone.get_colors())
 
 global count
 count = 1
 print(colorSeq)
-while count != 3:
+while count <= 3:
     drone.takeoff()
     print("Flying...")
-    sleep(2)
+    time.sleep(4)
     while airborne():
         None
     print("Scanning...")
-    sleep(1)
-    colors = drone.get_colors()
+    time.sleep(4)
+    frontColor = drone.get_front_color()
+    backColor = drone.get_back_color()
     colorValid = False
-    for color in colors:
-        print(color)
-        if color is colorSeq[count-1]:
-            count += 1
-            colorValid = True
-            break
+    print(frontColor)
+    print(backColor)
+    if frontColor is colorSeq[count-1] or backColor is colorSeq[count-1]:
+        print("Valid Color")
+        count += 1
+        colorValid = True
+        continue
     if not colorValid:
         print("Not a valid color was landed on in sequence")
-        break
+        quit()
+print("Color Sequence Completed")

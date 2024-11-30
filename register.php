@@ -15,28 +15,31 @@
 
 <body>
     <!-- <h1>Drone Racing Competition - Pilot Registration</h1> -->
-
-
-    <!-- User Registration Form -->
-    <!-- <form action="register.php" method="POST">
-        <label for="name">Pilot Name:</label>
-        <input type="text" id="name" name="name" required>
-
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-
-        <input type="submit" value="Register">
-    </form> -->
+    
 
     <main>
     <div class="container">
         <h1 class="title-text">EMU Drone Racing Competition</h1>
         <div class="container">
-            
+        <form class="form" action="register.php" method="POST">
+
+        <div class="field">
+        <label for="name">Pilot Name:</label>
+        <input type="text" id="name" name="name" required>
         </div>
         
+        <br>
+
+        <div class="field">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        </div>
+        
+
+        <br>
+        <input type="submit" value="Register and Fly">
+            </form>
+        </div>
     </div>
     </main>
 </body>

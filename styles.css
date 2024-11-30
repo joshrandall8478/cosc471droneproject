@@ -7,6 +7,37 @@ body{
     
 }
 
+.form{
+    margin:auto;
+    text-align: center;
+}
+
+input[type=text], input[type=email]{
+    color: white;
+    background-color: #2d2d2d;
+    border-radius: 2px;
+    border: 2px solid gray;
+}
+
+.field{
+    margin: 5px 0px;
+}
+input[type=submit]{
+    padding: 15px;
+    background-color: white;
+    font-size: 2em;
+    transition: all ease-out 0.3s;
+}
+input[type=submit]:hover{
+    cursor: pointer;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 25px;
+    transition: all ease-out 0.3s;
+}
+
 .title-text{
     text-align:center;
 }

@@ -3,12 +3,13 @@ from mysql.connector import Error
 
 # Class representing a database entry for a drone flight record
 class Database:
-    def __init__(self, host, user,password, database):
+    def __init__(self, host, user, password, database, table):
         self.host = host
         self.user = user
         self.password = password
         self.database = database
-        def create_connection(host, user,password, database):
+        self.table = table
+        def create_connection(host, user, password, database):
           try:
               connection = mysql.connector.connect(
                   host = host,
@@ -30,10 +31,10 @@ class Database:
         # Function to set up the database and create the required table if not exists
         def setup_database(connection):
             cursor = connection.cursor(buffered=True)
-            cursor.execute("SHOW DATABASES LIKE 'drone'")
+            cursor.execute("SHOW DATABASES LIKE" + "'" + database + "'")
             if cursor.rowcount == 0:
-                cursor.execute("CREATE DATABASE drone")
-            cursor.execute("USE drone")
+                cursor.execute("CREATE DATABASE " + database)
+            cursor.execute("USE " + database)
             
             # Create the dronestats table if it does not exist
             cursor.execute("SHOW TABLES LIKE 'dronestats'")
@@ -67,3 +68,5 @@ class Database:
             cursor.close()
     def close(self):
       self.connection.close()
+
+class 

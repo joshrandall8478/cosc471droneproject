@@ -23,9 +23,17 @@
         <div class="container">
         <form class="form" action="register.php" method="POST">
 
+        <h2>Pilot Info</h2>
         <div class="field">
-        <label for="name">Pilot Name:</label>
-        <input type="text" id="name" name="name" required>
+        <label for="name">First Name:</label>
+        <input type="text" id="name" name="firstName" required>
+        </div>
+        
+        <br>
+
+        <div class="field">
+        <label for="name">Last Name:</label>
+        <input type="text" id="name" name="lastName" required>
         </div>
         
         <br>

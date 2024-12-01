@@ -68,5 +68,3 @@ class Database:
             cursor.close()
     def close(self):
       self.connection.close()
-
-class 

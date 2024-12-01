@@ -90,7 +90,7 @@ print("Max Temperature: " + str(max_temperature) + "F")
 print("Max Accel: " + str(max_accel) + "mm/s")
 print("Duration: " + str(stopwatch))
 
-database = Database("localhost", "droneuser", "dronepassword", "drone")
+database = Database("localhost", "droneuser", "dronepassword", "drone", "dronestats")
 database.insert(max_height,max_temperature,max_accel,'{:.2f}'.format(stopwatch.duration))
 
 # while True:

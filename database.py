@@ -29,35 +29,35 @@ class Database:
               return None
         self.connection = create_connection(self.host, self.user, self.password, self.database)
         # Function to set up the database and create the required table if not exists
-        def setup_database(connection):
-            cursor = connection.cursor(buffered=True)
-            cursor.execute("SHOW DATABASES LIKE" + "'" + database + "'")
-            if cursor.rowcount == 0:
-                cursor.execute("CREATE DATABASE " + database)
-            cursor.execute("USE " + database)
+        # def setup_database(connection):
+        #     cursor = connection.cursor(buffered=True)
+        #     cursor.execute("SHOW DATABASES LIKE" + "'" + database + "'")
+        #     if cursor.rowcount == 0:
+        #         cursor.execute("CREATE DATABASE " + database)
+        #     cursor.execute("USE " + database)
             
-            # Create the dronestats table if it does not exist
-            cursor.execute("SHOW TABLES LIKE 'dronestats'")
-            if cursor.rowcount == 0:
-                cursor.execute("""
-                    CREATE TABLE dronestats (
-                        ID INT AUTO_INCREMENT PRIMARY KEY,
-                        maxHeight INT,
-                        maxTemperature FLOAT,
-                        maxAccel FLOAT,
-                        duration FLOAT
-                    )
-                """)
-        setup_database(self.connection)
+        #     # Create the dronestats table if it does not exist
+        #     cursor.execute("SHOW TABLES LIKE 'dronestats'")
+        #     if cursor.rowcount == 0:
+        #         cursor.execute("""
+        #             CREATE TABLE dronestats (
+        #                 ID INT AUTO_INCREMENT PRIMARY KEY,
+        #                 maxHeight INT,
+        #                 maxTemperature FLOAT,
+        #                 maxAccel FLOAT,
+        #                 duration FLOAT
+        #             )
+        #         """)
+        # setup_database(self.connection)
           # Method to insert a new record into the database
     def insert(self, max_height, max_temperature, max_accel, duration):
         try:
             cursor = self.connection.cursor(buffered=True)
             query = """
-                INSERT INTO dronestats (maxHeight, maxTemperature, maxAccel, duration)
+                INSERT INTO %s (maxHeight, maxTemperature, maxAccel, duration)
                 VALUES (%s, %s, %s, %s)
             """
-            values = (max_height, max_temperature, max_accel, duration)
+            values = (self.table, max_height, max_temperature, max_accel, duration)
             cursor.execute("USE drone")
             cursor.execute(query, values)
             self.connection.commit()

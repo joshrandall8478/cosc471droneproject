@@ -49,7 +49,7 @@
 
             // Fetch data from 'pilots' table
             $db = mysqli_connect("localhost:3306", "droneuser", "dronepassword", "drone");  // Connects to database in mysql
-            $query = "SELECT * FROM dronestats";
+            $query = "SELECT P.pilotID, P.name, L.duration from pilots P inner join leaderboard L on L.pilotID = P.pilotID order by L.duration ASC;";
             $result = mysqli_query($db,$query);
             $rows = mysqli_num_rows($result);   // Number of rows in $result
 
@@ -57,22 +57,18 @@
             // Check if the query returned any results
             if ($rows > 0) {
                 // (ID int, MaxHeightCM float, MaxTemperature float, maxAccel float, Duration float, primary key(id));
-                echo "<tr><td>ID</td><td>Max Height</td><td>Max Temperature</td><td>Max Accel</td><td>Duration</td></tr>";
+                echo "<tr><td>Pilot ID</td><td>Name</td><td>Duration</td></tr>";
                 // Loop through each row and output the data into the table
                 for($i = 0; $i < $rows; $i++){
                     $run = mysqli_fetch_assoc($result);
 
-                    $id = $run["ID"];
-                    $maxHeight = $run["maxHeight"];
-                    $maxTemp = $run["maxTemperature"];
-                    $maxAccel = $run["maxAccel"];
+                    $id = $run["pilotID"];
+                    $name = $run["name"];
                     $duration = $run["duration"];
 
                     echo "<tr>";
                     echo "<td>$id</td>";
-                    echo "<td>$maxHeight</td>";
-                    echo "<td>$maxTemp</td>";
-                    echo "<td>$maxAccel</td>";
+                    echo "<td>$name</td>";
                     echo "<td>$duration</td>";
                     echo "</tr>";
                 }

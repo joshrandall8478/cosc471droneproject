@@ -6,5 +6,5 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./data1:/var/lib/mysql
+      - ./data:/var/lib/mysql
       - ./initdb:/docker-entrypoint-initdb.d/

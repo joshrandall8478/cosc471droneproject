@@ -1,0 +1,8 @@
+Pilot:
+insert into pilots (name, email) values ("Joshua Randall","josh@joshrandall.net");
+
+Leaderboard:
+insert into leaderboard (duration, pilotID) values (30.00, 1);
+
+Print PHP table:
+select P.pilotID, P.name, L.duration from pilots P inner join leaderboard L on L.pilotID = P.pilotID order by L.duration ASC;

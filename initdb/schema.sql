@@ -9,15 +9,14 @@
 USE drone;
 
 CREATE TABLE pilots (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    firstName VARCHAR(255),
-    lastName VARCHAR(255),
+    pilotID INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
     email VARCHAR(255)
 );
 
 CREATE TABLE leaderboard (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    duration FLOAT,
-    pilotID INT,
-    FOREIGN KEY (pilotID) REFERENCES pilots(id)
+    runID INT AUTO_INCREMENT PRIMARY KEY,
+    duration FLOAT NOT NULL,
+    pilotID INT NOT NULL,
+    FOREIGN KEY (pilotID) REFERENCES pilots(pilotID)
 );

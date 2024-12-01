@@ -3,12 +3,11 @@ from mysql.connector import Error
 
 # Class representing a database entry for a drone flight record
 class Database:
-    def __init__(self, host, user, password, database, table):
+    def __init__(self, host, user, password, database):
         self.host = host
         self.user = user
         self.password = password
         self.database = database
-        self.table = table
         def create_connection(host, user, password, database):
           try:
               connection = mysql.connector.connect(
@@ -50,15 +49,25 @@ class Database:
         #         """)
         # setup_database(self.connection)
           # Method to insert a new record into the database
-    def insert(self, max_height, max_temperature, max_accel, duration):
+    def insert():
+       raise NotImplementedError("Must be implemented in a subclass")
+    def close(self):
+      self.connection.close()
+
+      
+# Subclasses
+class Leaderboard(Database):
+    def __init__(self, host, user, password, database, table):
+        super().__init__(host, user, password, database)
+        self.table = table
+    def insert(self, duration, pilotID):
         try:
             cursor = self.connection.cursor(buffered=True)
             query = """
-                INSERT INTO %s (maxHeight, maxTemperature, maxAccel, duration)
-                VALUES (%s, %s, %s, %s)
+                insert into %s (duration, pilotID) values (%s, %s)
             """
-            values = (self.table, max_height, max_temperature, max_accel, duration)
-            cursor.execute("USE drone")
+            values = (self.table, duration, pilotID)
+            cursor.execute("USE " + self.database)
             cursor.execute(query, values)
             self.connection.commit()
             print("Drone data inserted successfully.")
@@ -66,5 +75,24 @@ class Database:
             print(f"Failed to insert data: {e}")
         finally:
             cursor.close()
-    def close(self):
-      self.connection.close()
+
+
+class Pilot(Database):
+    def __init__(self, host, user, password, database, table):
+            super().__init__(host, user, password, database)
+            self.table = table
+    def insert(self, name, email):
+        try:
+            cursor = self.connection.cursor(buffered=True)
+            query = """
+                insert into %s (name, email) values ("%s","%s")
+            """
+            values = (self.table, name, email)
+            cursor.execute("USE " + self.database)
+            cursor.execute(query, values)
+            self.connection.commit()
+            print("Drone data inserted successfully.")
+        except Error as e:
+            print(f"Failed to insert data: {e}")
+        finally:
+            cursor.close()

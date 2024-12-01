@@ -19,8 +19,8 @@
 
     <main>
     <div class="container">
-        <h1 class="title-text">EMU Drone Racing Competition</h1>
-        <div class="container">
+    <a class="title-link" href="./index.php"><h1 class="title-text">EMU Drone Racing Competition</h1></a>
+    <div class="container">
         <form class="form" action="register.php" method="POST">
 
         <h2>Pilot Info</h2>

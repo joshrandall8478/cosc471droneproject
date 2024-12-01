@@ -38,8 +38,24 @@ input[type=submit]:hover{
     transition: all ease-out 0.3s;
 }
 
+.title-link:visited, .title-link{
+    text-decoration: none;
+}
 .title-text{
+    
+    color: lightgreen;
     text-align:center;
+    text-decoration: none;
+    transition: all ease-out 0.3s;
+}
+.title-text:visited{
+    color: lightgreen;
+    text-decoration: none;
+    transition: all ease-out 0.3s;    
+}
+.title-text:hover{
+    color: white;
+    transition: all ease-out 0.3s;
 }
 
 .flex{

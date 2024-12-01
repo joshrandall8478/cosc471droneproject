@@ -32,7 +32,7 @@
 
     <main>
     <div class="container">
-        <h1 class="title-text">EMU Drone Racing Competition</h1>
+    <a class="title-link" href="./index.php"><h1 class="title-text">EMU Drone Racing Competition</h1></a>
         <table id="data-table">
         <!-- <thead>
             <tr>
@@ -59,7 +59,7 @@
                 // (ID int, MaxHeightCM float, MaxTemperature float, maxAccel float, Duration float, primary key(id));
                 echo "<tr><td>Pilot ID</td><td>Name</td><td>Duration</td></tr>";
                 // Loop through each row and output the data into the table
-                for($i = 0; $i < $rows; $i++){
+                for($i = 0; $i < $rows && $i < 10; $i++){
                     $run = mysqli_fetch_assoc($result);
 
                     $id = $run["pilotID"];
@@ -81,7 +81,7 @@
     </table>
     <div class="flex buttons-group">
     <a class="button" href="./register.php">Fly and add new record</a>
-    <a class="button">See full leaderboard</a>
+    <a class="button" href="./table.php">See full leaderboard</a>
     </div>
         
     </div>

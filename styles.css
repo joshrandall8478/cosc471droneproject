@@ -1,3 +1,81 @@
+*{
+    font-family: "Roboto", sans-serif;
+}
+body{
+    background-color: black;
+    color: white;
+    
+}
+
+.form{
+    margin:auto;
+    text-align: center;
+}
+
+input[type=text], input[type=email]{
+    color: white;
+    background-color: #2d2d2d;
+    border-radius: 2px;
+    border: 2px solid gray;
+}
+
+.field{
+    margin: 5px 0px;
+}
+input[type=submit]{
+    padding: 15px;
+    background-color: white;
+    font-size: 2em;
+    transition: all ease-out 0.3s;
+}
+input[type=submit]:hover{
+    cursor: pointer;
+    padding: 20px;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 25px;
+    transition: all ease-out 0.3s;
+}
+
+.title-text{
+    text-align:center;
+}
+
+.flex{
+    display: "flex";
+}
+.button:hover{
+    padding: 20px;
+    border: 1px solid lightgreen;
+    color: lightgreen;
+    border-radius: 25px;
+    font-size: 20px;
+    text-decoration: none;
+    transition: all ease-out 0.3s;
+}
+.button{
+    padding: 15px;
+    border: 1px solid white;
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all ease-out 0.3s;
+}
+.button:visited{
+    color: white;
+    text-decoration: none;
+}
+.button:visited:hover{
+    color: lightgreen;
+}
+.buttons-group{
+    align-items: center;
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+
+}
 table {
     width: 100%;
     border-collapse: collapse;

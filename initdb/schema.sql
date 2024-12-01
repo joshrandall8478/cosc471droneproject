@@ -11,7 +11,7 @@ USE drone;
 CREATE TABLE pilots (
     pilotID INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255)
+    email VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE leaderboard (

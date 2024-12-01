@@ -17,10 +17,13 @@ input[type=text], input[type=email]{
     background-color: #2d2d2d;
     border-radius: 2px;
     border: 2px solid gray;
+    padding: 7px;
+    font-size: 1rem;
 }
 
 .field{
     margin: 5px 0px;
+    font-size: 1.5rem;
 }
 input[type=submit]{
     padding: 15px;

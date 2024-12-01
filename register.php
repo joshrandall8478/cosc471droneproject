@@ -21,19 +21,12 @@
     <div class="container">
     <a class="title-link" href="./index.php"><h1 class="title-text">EMU Drone Racing Competition</h1></a>
     <div class="container">
-        <form class="form" action="register.php" method="POST">
+        <form class="form" action="wait.php" method="POST">
 
         <h2>Pilot Info</h2>
         <div class="field">
-        <label for="name">First Name:</label>
-        <input type="text" id="name" name="firstName" required>
-        </div>
-        
-        <br>
-
-        <div class="field">
-        <label for="name">Last Name:</label>
-        <input type="text" id="name" name="lastName" required>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
         </div>
         
         <br>
@@ -50,6 +43,7 @@
         </div>
     </div>
     </main>
+    
 </body>
 
 </html>

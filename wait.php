@@ -23,6 +23,12 @@
         <div class="container">
         <h2>Waiting...</h2>
     </div>
+    <?php
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $command = escapeshellcmd('./test.py');
+
+      ?>
     </main>
 </body>
 

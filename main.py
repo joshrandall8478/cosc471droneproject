@@ -3,9 +3,8 @@ from stopwatch import Stopwatch
 from database import Database
 
 global stopwatch 
-global max_temperature
-global max_accel
-global max_height
+global name
+global email
 
 stopwatch = Stopwatch(2)
 

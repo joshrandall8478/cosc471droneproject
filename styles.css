@@ -56,10 +56,10 @@ input[type=submit]:hover{
     text-decoration: none;
     transition: all ease-out 0.3s;    
 }
-.title-text:hover{
+/* .title-text:hover{
     color: white;
     transition: all ease-out 0.3s;
-}
+} */
 
 .flex{
     display: "flex";

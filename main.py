@@ -1,7 +1,6 @@
 from codrone_edu.drone import *
 from stopwatch import Stopwatch
 from time import sleep
-from database import Database
 from database import Leaderboard
 from database import Pilot
 
@@ -26,6 +25,7 @@ def airborne():
         return False
     
 def runColorSequence():
+    stopwatch.reset()
     stopwatch.start()
     print("Getting data...")
     while count <= len(colorSeq):
@@ -52,32 +52,39 @@ def runColorSequence():
     print("Color Sequence Completed")
     return True
     
-print("Welcome to The Drone Competition Program")
-name = input("Please enter your name: ")
-email = input("Please enter your email: ")
 
-database = Pilot("localhost", "droneuser", "dronepassword", "drone", "leaderboard")
-if database.select("email",email) != None:
-    print("User registered!")
-    database.insert(name, email)
+def main():
+    print("Welcome to The Drone Competition Program")
+    name = input("Please enter your name: ")
+    email = input("Please enter your email: ")
 
-pilotId = database.select("pilotId","email",email)
-print()
+    database = Pilot("localhost", "droneuser", "dronepassword", "drone", "pilots")
+    if database.selectAll("email",email) == None:
+        print("User registered!")
+        database.insert(name, email)
+
+    pilotId = database.select("pilotId","email",email)[0]
+    print()
 
 
-global count
-count = 1
-print("Color sequence: " + colorSeq)
+    global count
+    count = 1
+    print("Color sequence: " + colorSeq)
 
-success = runColorSequence()
-stopwatch.stop()
-print("Duration: " + str(stopwatch))
+    success = runColorSequence()
+    stopwatch.stop()
+    print("Duration: " + str(stopwatch))
 
-if success:
-    print("Inserting run data into leaderboards...")
-    database = Leaderboard("localhost", "droneuser", "dronepassword", "drone", "leaderboard")
-    database.insert(str(stopwatch), pilotId)
-else:
-    print("Run is incomplete. To submit a run to the leaderboards, it must be successful.")
+    if success:
+        print("Inserting run data into leaderboards...")
+        database = Leaderboard("localhost", "droneuser", "dronepassword", "drone", "leaderboard")
+        stopwatchResult = '{:.2f}'.format(stopwatch.duration)
+        database.insert(stopwatchResult, pilotId)
+    else:
+        print("Run is incomplete. To submit a run to the leaderboards, it must be successful.")
 
-print("Thank you for using The Drone Competition")
+    print("Thank you for using The Drone Competition")
+    input("Press return to run again")
+
+while True():
+    main()

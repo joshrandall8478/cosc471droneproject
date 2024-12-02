@@ -63,14 +63,12 @@ class Leaderboard(Database):
     def insert(self, duration, pilotID):
         try:
             cursor = self.connection.cursor(buffered=True)
-            query = """
-                insert into %s (duration, pilotID) values (%s, %s)
-            """
-            values = (self.table, duration, pilotID)
+            query = f"insert into {self.table} (duration, pilotID) values (%s,%s)"
+            values = (duration, pilotID)
             cursor.execute("USE " + self.database)
             cursor.execute(query, values)
             self.connection.commit()
-            print("Drone data inserted successfully.")
+            # print("Drone data inserted successfully.")
         except Error as e:
             print(f"Failed to insert data: {e}")
         finally:
@@ -84,29 +82,24 @@ class Pilot(Database):
     def insert(self, name, email):
         try:
             cursor = self.connection.cursor(buffered=True)
-            query = """
-                insert into %s (name, email) values ("%s","%s")
-            """
-            values = (self.table, name, email)
+            query = f"INSERT INTO {self.table} (name, email) VALUES (%s, %s)"
+            values = (name, email)
             cursor.execute("USE " + self.database)
             cursor.execute(query, values)
             self.connection.commit()
-            print("Drone data inserted successfully.")
+            # print("Drone data inserted successfully.")
         except Error as e:
             print(f"Failed to insert data: {e}")
         finally:
             cursor.close()
-    def select(self, attribute, val):
+    def selectAll(self, attribute, val):
         try:
             cursor = self.connection.cursor(buffered=True)
-            query = """
-                select * from %s where %s = %s
-            """
-            values = (self.table, attribute, val)
+            query = f"select * from {self.table} where {attribute} = %s"
+            values = (val,)
             cursor.execute("USE " + self.database)
             cursor.execute(query, values)
             result = cursor.fetchone()
-            print("Drone data inserted successfully.")
             return result
         except Error as e:
             print(f"Failed to retrieve data: {e}")
@@ -116,14 +109,12 @@ class Pilot(Database):
     def select(self, selected, attribute, val):
         try:
             cursor = self.connection.cursor(buffered=True)
-            query = """
-                select %s from %s where %s = %s
-            """
-            values = (selected, self.table, attribute, val)
+            query = f"select {selected} from {self.table} where {attribute} = %s"
+            values = (val,)
             cursor.execute("USE " + self.database)
             cursor.execute(query, values)
             result = cursor.fetchone()
-            print("Drone data inserted successfully.")
+            # print("Drone data inserted successfully.")
             return result
         except Error as e:
             print(f"Failed to retrieve data: {e}")

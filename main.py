@@ -1,6 +1,9 @@
 from codrone_edu.drone import *
 from stopwatch import Stopwatch
+from time import sleep
 from database import Database
+from database import Leaderboard
+from database import Pilot
 
 global stopwatch 
 global name
@@ -8,98 +11,73 @@ global email
 
 stopwatch = Stopwatch(2)
 
-
-
 drone = Drone()
 drone.pair() # To pair automatically, may not always work
 
-# async def print_flight_state():
-#     print(drone.get_flight_state())
-#     await asyncio.sleep(1)
+global colorSeq
+colorSeq = ["Green", "Blue", "Red"] # Will be an environment variable later
 
-# global seconds
-# seconds = 0
-# def count():
-#     global seconds
-#     while True:
-#         seconds = seconds + 1
-#         sleep(1)
-
-
-
-
-drone.takeoff()
-
-# asyncio.run(print_flight_state())
+global colorActive
 
 def airborne():
     if "ModeFlight.Flight" in str(drone.get_flight_state()) or "ModeFlight.TakeOff" in str(drone.get_flight_state()):
         return True
     else:
         return False
+    
+def runColorSequence():
+    stopwatch.start()
+    print("Getting data...")
+    while count <= len(colorSeq):
+        drone.takeoff()
+        print("Flying...")
+        time.sleep(4)
+        while airborne():
+            None
+        print("Scanning...")
+        time.sleep(4)
+        frontColor = drone.get_front_color()
+        backColor = drone.get_back_color()
+        colorValid = False
+        print(frontColor)
+        print(backColor)
+        if frontColor is colorSeq[count-1] or backColor is colorSeq[count-1]:
+            print("Valid Color")
+            count += 1
+            colorValid = True
+            continue
+        if not colorValid:
+            print("Not a valid color was landed on in sequence")
+            return False
+    print("Color Sequence Completed")
+    return True
+    
+print("Welcome to The Drone Competition Program")
+name = input("Please enter your name: ")
+email = input("Please enter your email: ")
+
+database = Pilot("localhost", "droneuser", "dronepassword", "drone", "leaderboard")
+if database.select("email",email) != None:
+    print("User registered!")
+    database.insert(name, email)
+
+pilotId = database.select("pilotId","email",email)
+print()
 
 
-# global 
-max_height = 0
-max_temperature = 0
-max_accel = 0
+global count
+count = 1
+print("Color sequence: " + colorSeq)
 
-def get_height():
-    global max_height
-    # print(drone.get_height(unit="cm"))
-    if drone.get_pos_z() > max_height:
-        max_height = drone.get_pos_z(unit="cm")
-
-def get_temperature():
-    global max_temperature
-    # print(drone.get_temperature(unit="f"))
-    if drone.get_temperature() > max_temperature:
-        max_temperature = drone.get_temperature(unit="f")
-
-def get_accel():
-    global max_accel
-    x = max(drone.get_x_accel(),drone.get_y_accel())
-    if x > max_accel:
-        max_accel = x
-
-
-# global totalHeight
-# global heightPoints
-# totalHeight = 0
-# heightPoints = 0
-# def computeHeight():
-#     global totalHeight
-#     global heightPoints
-#     totalHeight = totalHeight + drone.get_pos_z(unit="cm")
-#     heightPoints = heightPoints + 1
-
-stopwatch.start()
-
-print("Getting data...")
-while airborne():
-    get_height()
-    get_temperature()
-    get_accel()
-
+success = runColorSequence()
 stopwatch.stop()
-
-
-print("Max Height: " + str(max_height) + "cm")
-print("Max Temperature: " + str(max_temperature) + "F")
-print("Max Accel: " + str(max_accel) + "mm/s")
 print("Duration: " + str(stopwatch))
 
-database = Database("localhost", "droneuser", "dronepassword", "drone", "dronestats")
-database.insert(max_height,max_temperature,max_accel,'{:.2f}'.format(stopwatch.duration))
+if success:
+    print("Inserting run data into leaderboards...")
+    database = Leaderboard("localhost", "droneuser", "dronepassword", "drone", "leaderboard")
+    database.insert(str(stopwatch), pilotId)
+else:
+    print("Run is incomplete. To submit a run to the leaderboards, it must be successful.")
 
-# while True:
-#     print(drone.get_flight_state())
-
-
-
-
-
-# drone.land()
-
-
-# drone.close()
+print("Thank you for using The Drone Competition")

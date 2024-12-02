@@ -96,3 +96,36 @@ class Pilot(Database):
             print(f"Failed to insert data: {e}")
         finally:
             cursor.close()
+    def select(self, attribute, val):
+        try:
+            cursor = self.connection.cursor(buffered=True)
+            query = """
+                select * from %s where %s = %s
+            """
+            values = (self.table, attribute, val)
+            cursor.execute("USE " + self.database)
+            cursor.execute(query, values)
+            result = cursor.fetchone()
+            print("Drone data inserted successfully.")
+            return result
+        except Error as e:
+            print(f"Failed to retrieve data: {e}")
+        finally:
+            cursor.close()
+    
+    def select(self, selected, attribute, val):
+        try:
+            cursor = self.connection.cursor(buffered=True)
+            query = """
+                select %s from %s where %s = %s
+            """
+            values = (selected, self.table, attribute, val)
+            cursor.execute("USE " + self.database)
+            cursor.execute(query, values)
+            result = cursor.fetchone()
+            print("Drone data inserted successfully.")
+            return result
+        except Error as e:
+            print(f"Failed to retrieve data: {e}")
+        finally:
+            cursor.close()

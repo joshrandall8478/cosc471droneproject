@@ -1,3 +1,9 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    setcookie("name", $_POST["name"], time() + 86400 * 30, "/"); // 86400 = 1 day
+    setcookie("email", $_POST["email"],time() + 86400 * 30, "/"); // 86400 = 1 day
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +20,7 @@
 </head>
 
 <body>
+
     <!-- <h1>Drone Racing Competition - Pilot Registration</h1> -->
 
 
@@ -43,19 +50,17 @@
         </thead>
         <tbody> -->
             <?php
-            // Include the database connection
-            // include 'connect.php';
 
-
-            // Fetch data from 'pilots' table
             $db = mysqli_connect("localhost:3306", "droneuser", "dronepassword", "drone");  // Connects to database in mysql
+
             $query = "SELECT * FROM dronestats";
+
             $result = mysqli_query($db,$query);
             $rows = mysqli_num_rows($result);   // Number of rows in $result
 
-            
             // Check if the query returned any results
             if ($rows > 0) {
+                
                 // (ID int, MaxHeightCM float, MaxTemperature float, maxAccel float, Duration float, primary key(id));
                 echo "<tr><td>ID</td><td>Max Height</td><td>Max Temperature</td><td>Max Accel</td><td>Duration</td></tr>";
                 // Loop through each row and output the data into the table
@@ -84,8 +89,8 @@
         <!-- </tbody> -->
     </table>
     <div class="flex buttons-group">
-    <a class="button" href="./register.php">Fly and add new record</a>
-    <a class="button">See full leaderboard</a>
+        <a class="button" href="./register.php">Register</a>
+        <a class="button">Fly</a>
     </div>
         
     </div>

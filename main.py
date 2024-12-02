@@ -4,6 +4,8 @@ from time import sleep
 from database import Leaderboard
 from database import Pilot
 
+import os
+
 global stopwatch 
 global name
 global email
@@ -17,6 +19,16 @@ global colorSeq
 colorSeq = ["Green", "Blue", "Red"] # Will be an environment variable later
 
 global colorActive
+
+def clear():
+ 
+    # for windows, os.name is 'nt'
+    if os.name == "nt":
+        os.system('cls')
+ 
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        os.system('clear')
 
 def airborne():
     if "ModeFlight.Flight" in str(drone.get_flight_state()) or "ModeFlight.TakeOff" in str(drone.get_flight_state()):
@@ -54,6 +66,7 @@ def runColorSequence():
     
 
 def main():
+    clear()
     print("Welcome to The Drone Competition Program")
     name = input("Please enter your name: ")
     email = input("Please enter your email: ")
@@ -86,5 +99,6 @@ def main():
     print("Thank you for using The Drone Competition")
     input("Press return to run again")
 
-while True():
+
+while True:
     main()

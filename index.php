@@ -13,7 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+
+<body class="blur background">
     <!-- <h1>Drone Racing Competition - Pilot Registration</h1> -->
 
 
@@ -30,9 +31,9 @@
         <input type="submit" value="Register">
     </form> -->
 
-    <main>
+    <main >
     <div class="container">
-    <a class="title-link" href="./index.php"><h1 class="title-text">EMU Drone Racing Competition</h1></a>
+    <h1 class="title-text">EMU Drone Racing Competition</h1>
         <table id="data-table">
         <!-- <thead>
             <tr>
@@ -57,7 +58,7 @@
             // Check if the query returned any results
             if ($rows > 0) {
                 // (ID int, MaxHeightCM float, MaxTemperature float, maxAccel float, Duration float, primary key(id));
-                echo "<tr><td>Pilot ID</td><td>Name</td><td>Duration</td></tr>";
+                echo "<tr><td>Placement</td><td>Pilot ID</td><td>Name</td><td>Duration</td></tr>";
                 // Loop through each row and output the data into the table
                 for($i = 0; $i < $rows && $i < 10; $i++){
                     $run = mysqli_fetch_assoc($result);
@@ -65,8 +66,10 @@
                     $id = $run["pilotID"];
                     $name = $run["name"];
                     $duration = $run["duration"];
+                    $placement = $i + 1;
 
                     echo "<tr>";
+                    echo "<td>$placement</td>";
                     echo "<td>$id</td>";
                     echo "<td>$name</td>";
                     echo "<td>$duration</td>";
@@ -79,10 +82,6 @@
             ?>
         <!-- </tbody> -->
     </table>
-    <div class="flex buttons-group">
-    <a class="button" href="./register.php">Fly and add new record</a>
-    <a class="button" href="./table.php">See full leaderboard</a>
-    </div>
         
     </div>
     </main>

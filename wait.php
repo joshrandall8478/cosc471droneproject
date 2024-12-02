@@ -1,3 +1,10 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    setcookie("name", $_POST["name"], time() + 86400 * 30, "/"); // 86400 = 1 day
+    setcookie("email", $_POST["email"],time() + 86400 * 30, "/"); // 86400 = 1 day
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +34,7 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $command = escapeshellcmd('./test.py');
-
+        system($command);
       ?>
     </main>
 </body>

@@ -4,6 +4,11 @@ from time import sleep
 from database import Leaderboard
 from database import Pilot
 
+# import GUI
+import tkinter as tk
+gui = tk.Tk()
+gui.geometry("600x400")
+
 import os
 
 global stopwatch 
@@ -12,8 +17,8 @@ global email
 
 stopwatch = Stopwatch(2)
 
-drone = Drone()
-drone.pair() # To pair automatically, may not always work
+# drone = Drone()
+# drone.pair() # To pair automatically, may not always work
 
 global colorSeq
 colorSeq = ["Green", "Blue", "Red"] # Will be an environment variable later
@@ -45,7 +50,7 @@ def runColorSequence():
         print("\nPress the power button on the controller to switch to flight.\nMake sure it shows the navigation arrow.\n")
         time.sleep(1)
         print("Taking off...")
-        drone.takeoff()
+        # drone.takeoff()
         print("Flying...")
         time.sleep(3)
         while airborne():
@@ -54,16 +59,16 @@ def runColorSequence():
         time.sleep(2)
         print("Scanning...")
         time.sleep(2)
-        frontColor = drone.get_front_color()
-        backColor = drone.get_back_color()
+        # frontColor = drone.get_front_color()
+        # backColor = drone.get_back_color()
         colorValid = False
-        print(frontColor)
-        print(backColor)
-        if frontColor is colorSeq[count-1] or backColor is colorSeq[count-1]:
-            print("Valid Color")
-            count += 1
-            colorValid = True
-            continue
+        # print(frontColor)
+        # print(backColor)
+        # if frontColor is colorSeq[count-1] or backColor is colorSeq[count-1]:
+        #     print("Valid Color")
+        #     count += 1
+        #     colorValid = True
+        #     continue
         if not colorValid:
             print("Not a valid color was landed on in sequence")
             return False
@@ -71,9 +76,21 @@ def runColorSequence():
     return True
     
 
+def loadGUI():
+    gui.title('Drone Competition')
+    title = tk.Label(gui, text="Welcome to the Drone Competition Program!", font=("Arial", 32))
+    title.pack()
+
+    
+    button = tk.Button(gui, text='Start Pilot', width=25, command=gui.destroy)
+    button.pack()
+
 def main():
     clear()
-    print("Welcome to The Drone Competition Program")
+    # print("Welcome to The Drone Competition Program")
+    
+
+
     name = input("Please enter your name: ")
     email = input("Please enter your email: ")
 

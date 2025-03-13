@@ -87,13 +87,44 @@ def switch_frame(new_frame):
 def start_page():
     start_frame = tk.Frame(gui)
     header = tk.Label(start_frame, text="Welcome to the Drone Competition Program!", font=("Arial", 32))
-    header.grid(row=0, column=0,sticky="ew")
-    button = tk.Button(start_frame, text='Start Pilot', width=25, command=lambda: switch_frame(registration_page()))
-    button.grid(row=1,column=0,sticky="ew")
+    header.grid(row=0, column=0,padx=10, pady=80,sticky="n")
+    button = tk.Button(start_frame, text='Start Pilot',font=("Arial", 20), command=lambda: switch_frame(registration_page()))
+    button.grid(row=1,column=0,padx=10, pady=10,sticky="n")
+
+    # Center the frame in the window
+    start_frame.grid_rowconfigure(0, weight=0)  # Make the first row not stretchable
+    start_frame.grid_rowconfigure(1, weight=0)  # Make the second row not stretchable
+    start_frame.grid_columnconfigure(0, weight=1)  # Make the column stretchable
     return start_frame
 
 def registration_page():
     registration_frame = tk.Frame(gui)
+
+    # Create and configure header label
+    header = tk.Label(registration_frame, text="Registration", font=("Arial", 32))
+    header.grid(row=0, column=0, columnspan=2, pady=20, sticky="n") 
+
+    # Username label and input field
+    name_label = tk.Label(registration_frame, text="Username", font=("Arial", 24))
+    name_label.grid(row=1, column=0, sticky="e", padx=10)  # Align text to the right of the column
+    name_field = tk.Text(registration_frame, height=1, font=("Arial", 24))
+    name_field.grid(row=1, column=1, sticky="ew", padx=10)  # Align text box to the left of the column
+
+    # Password label and input field
+    email_label = tk.Label(registration_frame, text="Password", font=("Arial", 24))
+    email_label.grid(row=2, column=0, sticky="e", padx=10)  # Align text to the right of the column
+    email_field = tk.Text(registration_frame, height=1, font=("Arial", 24))
+    email_field.grid(row=2, column=1, sticky="ew", padx=10)  # Align text box to the left of the column
+
+    # Register button with column span
+    button = tk.Button(registration_frame, text='Register', font=("Arial", 20), command=lambda: switch_frame(start_flight_page()))
+    button.grid(row=3, column=0, columnspan=2, pady=20, sticky="n")  # Center the button, no horizontal stretch
+
+    # Set the first column to fit the content
+    registration_frame.grid_columnconfigure(0, weight=0)
+    # Set the second column to be stretchable
+    registration_frame.grid_columnconfigure(1, weight=1) 
+
     return registration_frame
 
 def start_flight_page():

@@ -8,3 +8,16 @@ services:
     volumes:
       - ./data:/var/lib/mysql
       - ./initdb:/docker-entrypoint-initdb.d/
+    
+
+  leaderboard:
+    image: leaderboard:latest
+    container_name: leaderboard
+    env_file: .env
+    build:
+      context: .
+      dockerfile: leaderboard.dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - db

@@ -7,7 +7,7 @@ from database import Pilot
 # import GUI
 import tkinter as tk
 gui = tk.Tk()
-gui.geometry("800x600")
+gui.geometry("12000x600")
 
 current_frame = None
 
@@ -86,9 +86,9 @@ def switch_frame(new_frame):
 
 def start_page():
     start_frame = tk.Frame(gui)
-    header = tk.Label(start_frame, text="Welcome to the Drone Competition Program!", font=("Arial", 32))
+    header = tk.Label(start_frame, text="Welcome to the Drone Competition Program!", font=("Arial", 30))
     header.grid(row=0, column=0,padx=10, pady=80,sticky="n")
-    button = tk.Button(start_frame, text='Start Pilot',font=("Arial", 20), command=lambda: switch_frame(registration_page()))
+    button = tk.Button(start_frame, text='Get Started',font=("Arial", 20), command=lambda: switch_frame(registration_page()))
     button.grid(row=1,column=0,padx=10, pady=10,sticky="n")
 
     # Center the frame in the window

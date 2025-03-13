@@ -105,20 +105,24 @@ def registration_page():
     header.grid(row=0, column=0, columnspan=2, pady=20, sticky="n") 
 
     # Username label and input field
-    name_label = tk.Label(registration_frame, text="Username", font=("Arial", 24))
+    name_label = tk.Label(registration_frame, text="Name", font=("Arial", 24))
     name_label.grid(row=1, column=0, sticky="e", padx=10)  # Align text to the right of the column
-    name_field = tk.Text(registration_frame, height=1, font=("Arial", 24))
+    name_field = tk.Entry(registration_frame, font=("Arial", 24))
     name_field.grid(row=1, column=1, sticky="ew", padx=10)  # Align text box to the left of the column
 
     # Password label and input field
-    email_label = tk.Label(registration_frame, text="Password", font=("Arial", 24))
+    email_label = tk.Label(registration_frame, text="Email", font=("Arial", 24))
     email_label.grid(row=2, column=0, sticky="e", padx=10)  # Align text to the right of the column
-    email_field = tk.Text(registration_frame, height=1, font=("Arial", 24))
+    email_field = tk.Entry(registration_frame, font=("Arial", 24))
     email_field.grid(row=2, column=1, sticky="ew", padx=10)  # Align text box to the left of the column
 
+
+    error_text = tk.Label(registration_frame, font=("Arial",20), fg="red")
+    error_text.grid(row=5, column=0, columnspan=2, pady=20, sticky="n")
+
     # Register button with column span
-    button = tk.Button(registration_frame, text='Register', font=("Arial", 20), command=lambda: switch_frame(start_flight_page()))
-    button.grid(row=3, column=0, columnspan=2, pady=20, sticky="n")  # Center the button, no horizontal stretch
+    button = tk.Button(registration_frame, text='Register', font=("Arial", 20), command=lambda: register_handler(name_field,email_field,error_text))
+    button.grid(row=4, column=0, columnspan=2, pady=20, sticky="n")  # Center the button, no horizontal stretch
 
     # Set the first column to fit the content
     registration_frame.grid_columnconfigure(0, weight=0)
@@ -126,6 +130,24 @@ def registration_page():
     registration_frame.grid_columnconfigure(1, weight=1) 
 
     return registration_frame
+
+def register_handler(name_field,email_field,error):
+    name = name_field.get()
+    email = email_field.get()
+    err_msg = ""
+    if name == "" or email == "":
+        if name == "":
+            err_msg += "Name cannot be empty\n"
+        if email == "":
+            err_msg += "Email cannot be empty\n"
+        error.config(text=err_msg)
+    else:
+            # database = Pilot("localhost", "droneuser", "dronepassword", "drone", "pilots")
+            # if database.selectAll("email",email) == None:
+            #     database.insert(name, email)
+            switch_frame(start_flight_page)
+
+        
 
 def start_flight_page():
     start_flight_frame = tk.Frame(gui)
@@ -142,39 +164,19 @@ def result_page():
 def end_page():
     end_frame = tk.Frame(gui)
     return end_frame
+
     
 
 def main():
     clear()
-    # print("Welcome to The Drone Competition Program")
-    switch_frame(start_page())
-
-
-
     gui.title('Drone Competition')
-
-    
-
-
-    # registration_frame = tk.Frame(gui)
-    # registration_frame.pack()
-
-
-    # start_flight_frame = tk.Frame(gui)
-    # start_flight_frame.pack()
-
-
+    switch_frame(start_page())
     gui.mainloop()
-    
-
 
     # name = input("Please enter your name: ")
     # email = input("Please enter your email: ")
 
-    # database = Pilot("localhost", "droneuser", "dronepassword", "drone", "pilots")
-    # if database.selectAll("email",email) == None:
-    #     print("User registered!")
-    #     database.insert(name, email)
+
 
     # pilotId = database.select("pilotId","email",email)[0]
     # print()

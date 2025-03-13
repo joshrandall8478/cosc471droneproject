@@ -78,8 +78,8 @@ def runColorSequence():
 
 def loadGUI():
     gui.title('Drone Competition')
-    title = tk.Label(gui, text="Welcome to the Drone Competition Program!", font=("Arial", 32))
-    title.pack()
+    header = tk.Label(gui, text="Welcome to the Drone Competition Program!", font=("Arial", 32))
+    header.pack()
 
     
     button = tk.Button(gui, text='Start Pilot', width=25, command=gui.destroy)
@@ -88,6 +88,7 @@ def loadGUI():
 def main():
     clear()
     # print("Welcome to The Drone Competition Program")
+    loadGUI()
     
 
 

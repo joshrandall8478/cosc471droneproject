@@ -46,7 +46,7 @@
             <?php
             // Include the database connection
             // include 'connect.php';
-
+            // Load environment variables from .env file
 
             // Fetch data from 'pilots' table
             $db_host = getenv('DB_HOST');
@@ -54,8 +54,24 @@
             $db_password = getenv('MYSQL_PASSWORD');
             $db_name = getenv('MYSQL_DATABASE');
             $db_port = getenv('DB_PORT');
+
+
+            // Set default values if environment variables are not set
+            $db_host = $db_host ?: 'localhost';
+            $db_user = $db_user ?: 'droneuser';
+            $db_password = $db_password ?: "dronepassword";
+            $db_name = $db_name ?: 'drone';
+            $db_port = $db_port ?: '3306';
             
+            // echo "<script>console.log('DB_HOST: " . $db_host . "');</script>";
+            // echo "<script>console.log('MYSQL_USER: " . $db_user . "');</script>";
+            // echo "<script>console.log('MYSQL_PASSWORD: " . $db_password . "');</script>";
+            // echo "<script>console.log('MYSQL_DATABASE: " . $db_name . "');</script>";
+            // echo "<script>console.log('DB_PORT: " . $db_port . "');</script>";
             $db = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);  // Connects to database in mysql
+            if (!$db) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
             $query = "SELECT P.pilotID, P.name, L.duration from pilots P inner join leaderboard L on L.pilotID = P.pilotID order by L.duration ASC;";
             $result = mysqli_query($db,$query);
             $rows = mysqli_num_rows($result);   // Number of rows in $result

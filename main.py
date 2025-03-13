@@ -166,9 +166,16 @@ def end_page():
     return end_frame
 
     
+def set_fullscreen():
+    gui.attributes('-fullscreen', True)  # Set the window to fullscreen
+    gui.bind('<Escape>', exit_fullscreen)  # Bind the Escape key to exit fullscreen
+
+def exit_fullscreen(event=None):
+    gui.attributes('-fullscreen', False)  # Disable fullscreen
 
 def main():
     clear()
+    set_fullscreen()
     gui.title('Drone Competition')
     switch_frame(start_page())
     gui.mainloop()

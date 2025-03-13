@@ -4,7 +4,7 @@ services:
     container_name: drone_db
     env_file: ".env"
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ./data:/var/lib/mysql
       - ./initdb:/docker-entrypoint-initdb.d/

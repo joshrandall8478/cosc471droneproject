@@ -53,8 +53,9 @@
             $db_user = getenv('MYSQL_USER');
             $db_password = getenv('MYSQL_PASSWORD');
             $db_name = getenv('MYSQL_DATABASE');
-
-            $db = mysqli_connect($db_host, $db_user, $db_password, $db_name);  // Connects to database in mysql
+            $db_port = getenv('DB_PORT');
+            
+            $db = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);  // Connects to database in mysql
             $query = "SELECT P.pilotID, P.name, L.duration from pilots P inner join leaderboard L on L.pilotID = P.pilotID order by L.duration ASC;";
             $result = mysqli_query($db,$query);
             $rows = mysqli_num_rows($result);   // Number of rows in $result

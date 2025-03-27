@@ -16,6 +16,7 @@ import os
 global stopwatch 
 global name
 global email
+global pilotId
 
 stopwatch = Stopwatch(2)
 
@@ -43,38 +44,48 @@ def airborne():
     else:
         return False
     
-def runColorSequence():
+def runColorSequence(prompt, timer):
     stopwatch.reset()
     stopwatch.start()
-    print("Getting data...")
+    
+    prompt.config(text="Getting data...")
+    gui.update()  # Update the GUI to reflect the changes
     count = 1
     while count <= len(colorSeq):
-        print("\nPress the power button on the controller to switch to flight.\nMake sure it shows the navigation arrow.\n")
+        prompt.config(text="\nPress the power button on the controller to switch to flight.\nMake sure it shows the navigation arrow.\n")
+        gui.update()
         time.sleep(1)
-        print("Taking off...")
+        prompt.config(text="Taking off...")
+        gui.update()
         # drone.takeoff()
-        print("Flying...")
+        prompt.config(text="Flying...")
+        gui.update()
         time.sleep(3)
-        while airborne():
-            None
-        print("\nPress the power button on the controller to scan the color.\nMake sure it says LINK.\n")
+        # while airborne():
+        #     None
+        prompt.config(text="\nPress the power button on the controller to scan the color.\nMake sure it says LINK.\n")
+        gui.update()
         time.sleep(2)
-        print("Scanning...")
+        prompt.config(text="Scanning...")
+        gui.update()
         time.sleep(2)
         # frontColor = drone.get_front_color()
         # backColor = drone.get_back_color()
-        colorValid = False
-        # print(frontColor)
-        # print(backColor)
-        # if frontColor is colorSeq[count-1] or backColor is colorSeq[count-1]:
-        #     print("Valid Color")
+
+        # prompt.config(text=f"Front Color: {frontColor}\nBack Color: {backColor}")
+        gui.update()
+        # if frontColor == colorSeq[count-1] or backColor == colorSeq[count-1]:
+        #     prompt.config(text="Valid Color")
+        #     gui.update()
         #     count += 1
         #     colorValid = True
         #     continue
-        if not colorValid:
-            print("Not a valid color was landed on in sequence")
-            return False
-    print("Color Sequence Completed")
+        # if not colorValid:
+        #     prompt.config(text="Not a valid color was landed on in sequence")
+        #     gui.update()
+        #     return False
+    prompt.config(text="Color Sequence Completed")
+    gui.update()
     return True
 
 def switch_frame(new_frame):
@@ -142,15 +153,36 @@ def register_handler(name_field,email_field,error):
             err_msg += "Email cannot be empty\n"
         error.config(text=err_msg)
     else:
-            # database = Pilot("localhost", "droneuser", "dronepassword", "drone", "pilots")
-            # if database.selectAll("email",email) == None:
-            #     database.insert(name, email)
-            switch_frame(start_flight_page)
+            database = Pilot("localhost", "droneuser", "dronepassword", "drone", "pilots")
+            if database.selectAll("email",email) == None:
+                database.insert(name, email)
+            pilotId = database.select("pilotId","email",email)[0]
+            switch_frame(start_flight_page())
 
-        
 
 def start_flight_page():
     start_flight_frame = tk.Frame(gui)
+    
+    # Header label
+    header = tk.Label(start_flight_frame, text="Start Flight", font=("Arial", 32))
+    header.grid(row=0, column=0, padx=10, pady=80, sticky="n")
+    
+    # Color sequence label
+    color_seq_label = tk.Label(start_flight_frame, text="Color Sequence: " + ", ".join(colorSeq), font=("Arial", 24))
+    color_seq_label.grid(row=1, column=0, padx=10, pady=10, sticky="n")
+
+    prompt = tk.Label(start_flight_frame, text="Press the power button on the controller to switch to flight.\nMake sure it shows the navigation arrow.", font=("Arial", 20))
+    prompt.grid(row=2, column=0, padx=10, pady=10, sticky="n")
+    sleep(2)
+
+    timer = tk.Label(start_flight_frame, text="0", font=("Arial", 24))
+
+    end_page(runColorSequence(prompt, timer))
+    
+    
+    # Configure the grid to center content
+    start_flight_frame.grid_columnconfigure(0, weight=1)  # Make the single column stretchable
+    
     return start_flight_frame
 
 def flight_page():
@@ -161,11 +193,44 @@ def result_page():
     result_frame = tk.Frame(gui)
     return result_frame
 
-def end_page():
+def end_page(success):
     end_frame = tk.Frame(gui)
+
+    # Header label
+    header = tk.Label(end_frame, text="Run Summary", font=("Arial", 32))
+    header.grid(row=0, column=0, padx=10, pady=20, sticky="n")
+
+    # Display success or failure message
+    if success:
+        duration_label = tk.Label(end_frame, text=f"Duration: {stopwatch}", font=("Arial", 24))
+        duration_label.grid(row=1, column=0, padx=10, pady=10, sticky="n")
+
+        leaderboard_label = tk.Label(end_frame, text="Inserting run data into leaderboards...", font=("Arial", 20))
+        leaderboard_label.grid(row=2, column=0, padx=10, pady=10, sticky="n")
+
+        database = Leaderboard("localhost", "droneuser", "dronepassword", "drone", "leaderboard")
+        stopwatchResult = '{:.2f}'.format(stopwatch.duration)
+        database.insert(stopwatchResult, pilotId)
+
+        time_label = tk.Label(end_frame, text=f"Time: {stopwatchResult}", font=("Arial", 24))
+        time_label.grid(row=3, column=0, padx=10, pady=10, sticky="n")
+    else:
+        failure_label = tk.Label(end_frame, text="Run is incomplete. To submit a run to the leaderboards, it must be successful.", font=("Arial", 20), fg="red")
+        failure_label.grid(row=1, column=0, padx=10, pady=10, sticky="n")
+
+    # Thank you message
+    thank_you_label = tk.Label(end_frame, text="Thank you for using The Drone Competition", font=("Arial", 24))
+    thank_you_label.grid(row=4, column=0, padx=10, pady=20, sticky="n")
+
+    # Restart button
+    restart_button = tk.Button(end_frame, text="Restart", font=("Arial", 20), command=lambda: switch_frame(start_page()))
+    restart_button.grid(row=5, column=0, padx=10, pady=20, sticky="n")
+
+    # Configure the grid to center content
+    end_frame.grid_columnconfigure(0, weight=1)
+
     return end_frame
 
-    
 def set_fullscreen():
     gui.attributes('-fullscreen', True)  # Set the window to fullscreen
     gui.bind('<Escape>', exit_fullscreen)  # Bind the Escape key to exit fullscreen
@@ -180,12 +245,10 @@ def main():
     switch_frame(start_page())
     gui.mainloop()
 
-    # name = input("Please enter your name: ")
-    # email = input("Please enter your email: ")
 
 
 
-    # pilotId = database.select("pilotId","email",email)[0]
+    
     # print()
 
 
@@ -197,18 +260,18 @@ def main():
     # success = runColorSequence()
     # stopwatch.stop()
 
-    # if success:
-    #     print("Duration: " + str(stopwatch))
-    #     print("Inserting run data into leaderboards...")
-    #     database = Leaderboard("localhost", "droneuser", "dronepassword", "drone", "leaderboard")
-    #     stopwatchResult = '{:.2f}'.format(stopwatch.duration)
-    #     print("Time: " + str(stopwatchResult))
-    #     database.insert(stopwatchResult, pilotId)
-    # else:
-    #     print("Run is incomplete. To submit a run to the leaderboards, it must be successful.")
+    if success:
+        print("Duration: " + str(stopwatch))
+        print("Inserting run data into leaderboards...")
+        database = Leaderboard("localhost", "droneuser", "dronepassword", "drone", "leaderboard")
+        stopwatchResult = '{:.2f}'.format(stopwatch.duration)
+        print("Time: " + str(stopwatchResult))
+        database.insert(stopwatchResult, pilotId)
+    else:
+        print("Run is incomplete. To submit a run to the leaderboards, it must be successful.")
 
-    # print("Thank you for using The Drone Competition")
-    # input("Press return to run again")
+    print("Thank you for using The Drone Competition")
+    input("Press return to run again")
 
 
 while True:
